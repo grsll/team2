@@ -3,5 +3,6 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 
 access_user_vehicle,access.user.vehicle,model_compose_auto_clean_vehicle,group_auto_clean_user,1,1,1,0
 access_admin_vehicle,access.admin.vehicle,model_compose_auto_clean_vehicle,group_auto_clean_admin,1,1,1,1
+
 access_user_carwash_order,access.user.carwash.order,model_compose_auto_clean_carwash_order,group_auto_clean_user,1,0,0,0
 access_admin_carwash_order,access.admin.carwash.order,model_compose_auto_clean_carwash_order,group_auto_clean_admin,1,1,1,1

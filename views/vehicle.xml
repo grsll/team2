@@ -24,9 +24,7 @@
             <field name="arch" type="xml">
                 <form string="Form Kendaraan">
                 <header>
-                    <button name="action_archive_vehicle" string="Arsipkan Kendaraan" 
-                            type="object" class="btn-secondary" 
-                            invisible="not active" confirm="Apakah Anda yakin ingin mengarsipkan kendaraan ini?"/>
+                    <button name="action_archive" string="Archive Vehicle" type="object" invisible="not active" class="btn-secondary"/>
                 </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">

@@ -3,7 +3,7 @@
 
     <data>
         <!-- Add you code here -->
-        <menuitem id="menu_root" name="Auto Clean" sequence="0" web_icon="compose_auto_clean,static/description/book.png"/>
+        <menuitem id="menu_root" name="Auto Clean" sequence="0" web_icon="composeautoclean,static/img/car-service.png"/>
         <menuitem id="menu_master_data" name="Master Data" parent="menu_root" sequence="10"/>
     </data>
 

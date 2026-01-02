@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Customer Form View -->
+    <record id="view_customer_form" model="ir.ui.view">
+        <field name="name">compose_auto_clean.customer.form</field>
+        <field name="model">compose_auto_clean.customer</field>
+        <field name="arch" type="xml">
+            <form string="Customer Registration">
+                <sheet>
+                    <group>
+                        <group name="reg_type" string="Tipe Registrasi">
+                            <field name="customer_type" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                        </group>
+                        <group name="search_existing" string="Pencarian" invisible="customer_type != 'lama'">
+                            <field name="existing_customer_id" 
+                                placeholder="Cari data customer lama..."
+                                options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                    </group>
+
+                    <group string="Data Customer" invisible="customer_type == 'lama' and not existing_customer_id">
+                        <group>
+                            <field name="name" 
+                                placeholder="Masukkan nama customer..."
+                                readonly="customer_type == 'lama' and existing_customer_id"/>
+                            <field name="phone" widget="phone" 
+                                placeholder="Contoh: 08123456789"
+                                readonly="customer_type == 'lama' and existing_customer_id"/>
+                        </group>
+                        <group>
+                            <field name="vehicle_type" 
+                                readonly="customer_type == 'lama' and existing_customer_id"/>
+                            <field name="vehicle_number" 
+                                placeholder="Contoh: B 1234 XYZ"
+                                readonly="customer_type == 'lama' and existing_customer_id"/>
+                        </group>
+                    </group>
+
+                    <group string="Alamat" invisible="customer_type == 'lama' and not existing_customer_id">
+                        <field name="address" nolabel="1" 
+                            placeholder="Masukkan alamat lengkap di sini..."
+                            readonly="customer_type == 'lama' and existing_customer_id"/>
+                    </group>
+                    
+                    <notebook invisible="customer_type == 'lama' and not existing_customer_id">
+                        <page string="Riwayat Order" name="history">
+                            <group>
+                                <field name="visit_count" readonly="1"/>
+                                <field name="last_visit_date" readonly="1"/>
+                            </group>
+                            <field name="order_ids" readonly="1">
+                                <list>
+                                    <field name="order_date"/>
+                                    <field name="service_name"/>
+                                    <field name="vehicle_id"/>
+                                    <field name="price" sum="Total Omset"/>
+                                    <field name="payment_status" widget="badge" 
+                                        decoration-success="payment_status == 'lunas'"
+                                        decoration-info="payment_status == 'belum bayar'"
+                                        decoration-muted="payment_status == 'draft'"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Customer list View -->
+    <record id="view_customer_list" model="ir.ui.view">
+        <field name="name">compose_auto_clean.customer.list</field>
+        <field name="model">compose_auto_clean.customer</field>
+        <field name="arch" type="xml">
+            <list string="Customers">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="vehicle_type"/>
+                <field name="vehicle_number"/>
+                <field name="visit_count"/>
+                <field name="last_visit_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Customer Search View -->
+    <record id="view_customer_search" model="ir.ui.view">
+        <field name="name">compose_auto_clean.customer.search</field>
+        <field name="model">compose_auto_clean.customer</field>
+        <field name="arch" type="xml">
+            <search string="Search Customer">
+                <field name="name" string="Nama" filter_domain="[('name', 'ilike', self)]"/>
+                <field name="phone" string="Nomor HP"/>
+                <field name="vehicle_number" string="Nomor Kendaraan"/>
+                
+                <group expand="0" string="Group By">
+                    <filter string="Jenis Kendaraan" name="group_vehicle_type" 
+                            context="{'group_by': 'vehicle_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Customer Action -->
+    <record id="action_customer" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="res_model">compose_auto_clean.customer</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Registrasi Customer
+            </p>
+            <p>
+                Pilih "Baru" untuk mendaftarkan customer baru, atau "Lama" untuk mencari data yang sudah ada.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="menu_customer" 
+            name="Customers" 
+            parent="menu_master_data" 
+            action="action_customer" 
+            sequence="10"/>
+</odoo>

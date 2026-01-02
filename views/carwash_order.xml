@@ -22,17 +22,29 @@
             <field name="name">carwash_order.form</field>
             <field name="model">compose_auto_clean.carwash_order</field>
             <field name="arch" type="xml">
-                <form>
+                <form string="Carwash Order">
                     <sheet>
                         <group>
-                            <field name="customer_id"/>
-                            <field name="vehicle_id"/>
-                            <field name="service_name"/>
-                            <field name="price"/>
-                            <field name="duration"/>
-                            <field name="variant"/>
-                            <field name="payment_status"/>
-                            <field name="order_date"/>
+                            <group string="Customer &amp; Vehicle">
+                                <field name="customer_id" options="{'no_create': True}"/>
+                                <field name="vehicle_id" options="{'no_create': True}"/>
+                            </group>
+                            <group string="Order Info">
+                                <field name="order_date"/>
+                                <field name="payment_status" widget="badge" 
+                                       decoration-success="payment_status == 'lunas'"
+                                       decoration-info="payment_status == 'belum bayar'"/>
+                            </group>
+                        </group>
+                        <group string="Service Details">
+                            <group>
+                                <field name="service_name"/>
+                                <field name="variant"/>
+                            </group>
+                            <group>
+                                <field name="price"/>
+                                <field name="duration" widget="float_time"/>
+                            </group>
                         </group>
                     </sheet>
                 </form>

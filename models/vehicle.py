@@ -12,4 +12,4 @@ class Vehicle(models.Model):
     brand = fields.Char(string='Merek Kendaraan')
     color = fields.Char(string='Warna Kendaraan')
     customer_id = fields.Many2one('res.partner', string='Pemilik Kendaraan', required=True, ondelete='cascade')
-    wash_order_ids = fields.One2many('compose_auto_clean.carwash_order', 'vehicle_id', string='Riwayat Cuci')
+    carwash_ids = fields.One2many('compose_auto_clean.carwash_order', 'vehicle_id', string='Riwayat Cuci')

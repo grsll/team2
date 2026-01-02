@@ -7,33 +7,53 @@
             <field name="name">compose_auto_clean.vehicle.list</field>
             <field name="model">compose_auto_clean.vehicle</field>
             <field name="arch" type="xml">
-                <list string="Daftar Kendaraan">
+                <list string="Daftar Kendaraan" decoration-info="vehicle_type == 'mobil'" decoration-success="vehicle_type == 'motor'">
                     <field name="name"/>
-                    <field name="vehicle_type"/>
+                    <field name="vehicle_type" decoration-info="vehicle_type == 'mobil'" decoration-success="vehicle_type == 'motor'"/>
                     <field name="brand"/>
                     <field name="color"/>
                     <field name="customer_id"/>
+                    <field name="active" widget="boolean_toggle"/>
                 </list>
             </field>
         </record>
 
-        <record id="vehicle_view_form" model="ir.ui.view">
-            <field name="name">compose_auto_clean.vehicle.form</field>
-            <field name="model">compose_auto_clean.vehicle</field>
+        <record id="cdn_vehicle_view_form" model="ir.ui.view">
+            <field name="name">cdn.vehicle.form</field>
+            <field name="model">cdn.vehicle</field>
             <field name="arch" type="xml">
                 <form string="Form Kendaraan">
                     <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                        
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Contoh: B 1234 ABC"/>
+                            </h1>
+                        </div>
                         <group>
                             <group>
-                                <field name="name" placeholder="Contoh: B 1234 ABC"/>
                                 <field name="vehicle_type" widget="radio" options="{'horizontal': true}"/>
                                 <field name="customer_id"/>
+                                <field name="active" invisible="1"/>
                             </group>
                             <group>
                                 <field name="brand" placeholder="Contoh: Toyota / Honda"/>
-                                <field name="color"/>
+                                <field name="color" widget="color_picker"/>
                             </group>
                         </group>
+                        
+                        <notebook>
+                            <page string="Riwayat Cuci" name="wash_history">
+                                <field name="carwash__ids" readonly="1">
+                                    <list>
+                                        <field name="name" string="Nomor Order"/>
+                                        <field name="date" string="Tanggal"/>
+                                        <field name="state" widget="badge"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
